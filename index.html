@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Luminar Capital Partners — Project Matrix</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0e0e0e;
+    --surface: #161616;
+    --surface2: #1e1e1e;
+    --border: #2a2a2a;
+    --text: #f0f0f0;
+    --muted: #666;
+    --accent: #c8f542;
+    --accent-dim: rgba(200, 245, 66, 0.12);
+    --red: #ff4d4d;
+    --blue: #4d9fff;
+  }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    min-height: 100vh;
+    padding: 20px 16px 40px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+  }
+
+  .fund-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .deal-title {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(15px, 4vw, 20px);
+    font-weight: 700;
+    color: var(--text);
+    margin-top: 5px;
+  }
+
+  .deal-subtitle {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+
+  .confidential {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-align: right;
+    flex-shrink: 0;
+    line-height: 1.7;
+  }
+
+  /* ── TABS ── */
+  .tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-bottom: 20px;
+    background: var(--surface);
+    padding: 4px;
+    border-radius: 4px;
+  }
+
+  .tab {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 10px 8px;
+    border-radius: 2px;
+    cursor: pointer;
+    color: var(--muted);
+    border: none;
+    background: transparent;
+    transition: all 0.15s;
+    text-align: center;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .tab.active {
+    background: var(--surface2);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 18px;
+  }
+
+  .card-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 7px;
+  }
+
+  .card-value {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(22px, 6vw, 28px);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .card-value.accent { color: var(--accent); }
+
+  .card-sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+
+  /* ── PANEL 1: EARN-OUT ── */
+  .calc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 360px) {
+    .calc-grid { grid-template-columns: 1fr; }
+  }
+
+  .slider-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px 18px;
+    margin-bottom: 16px;
+  }
+
+  .slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 20px;
+  }
+
+  .slider-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .slider-current {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(18px, 5vw, 22px);
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    border: 3px solid var(--bg);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+
+  input[type=range]::-moz-range-thumb {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    border: 3px solid var(--bg);
+  }
+
+  /* Slim 3-marker row (hide RANGE MAX on very small screens) */
+  .slider-markers {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 14px;
+  }
+
+  .marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Space Mono', monospace;
+    min-width: 0;
+  }
+
+  .marker-tick { width: 1px; height: 6px; background: var(--border); margin-bottom: 4px; }
+  .marker-label { font-size: 8px; color: var(--muted); letter-spacing: 0.04em; white-space: nowrap; }
+  .marker-value { font-size: 9px; color: var(--text); margin-top: 2px; }
+
+  .marker.floor .marker-tick { background: var(--red); }
+  .marker.floor .marker-value { color: var(--red); }
+  .marker.target .marker-tick { background: var(--accent); }
+  .marker.target .marker-value { color: var(--accent); }
+  .marker.bp .marker-tick { background: var(--blue); }
+  .marker.bp .marker-value { color: var(--blue); }
+  .marker.hide-xs { display: flex; }
+  @media (max-width: 340px) { .marker.hide-xs { display: none; } }
+
+  .payout-bar-section {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .payout-bar-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .payout-track {
+    height: 10px;
+    background: var(--border);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .payout-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #c8f542, #a8d420);
+    border-radius: 5px;
+    transition: width 0.2s ease;
+  }
+
+  /* Mobile-optimised scenario cards instead of a 4-col table */
+  .scenario-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 16px;
+  }
+
+  .scenario-row {
+    display: grid;
+    grid-template-columns: 72px 1fr auto;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 10px 12px;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .scenario-row.highlighted {
+    background: var(--accent-dim);
+    border-color: rgba(200,245,66,0.35);
+  }
+
+  .scenario-ebit {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .scenario-row.highlighted .scenario-ebit { color: var(--accent); }
+
+  .scenario-status {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.3;
+  }
+
+  .scenario-row.highlighted .scenario-status { color: var(--accent); }
+
+  .status-pill {
+    display: inline-block;
+    padding: 3px 7px;
+    border-radius: 2px;
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .pill-red { background: rgba(255,77,77,0.15); color: var(--red); }
+  .pill-green { background: rgba(200,245,66,0.15); color: var(--accent); }
+  .pill-blue { background: rgba(77,159,255,0.15); color: var(--blue); }
+
+  .alignment-note {
+    background: var(--accent-dim);
+    border: 1px solid rgba(200,245,66,0.25);
+    border-radius: 4px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .alignment-note-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  .alignment-note-text { font-size: 12px; color: var(--text); line-height: 1.6; }
+  .alignment-note-text strong { color: var(--accent); }
+
+  /* ── PANEL 2: VALUE CREATION ── */
+  .vc-intro {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 18px;
+    margin-bottom: 16px;
+  }
+
+  .vc-ev-change {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .ev-box { text-align: center; }
+
+  .ev-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+
+  .ev-number {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(20px, 5vw, 24px);
+    font-weight: 700;
+  }
+
+  .ev-arrow { font-size: 18px; color: var(--accent); }
+
+  .vc-headline {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(12px, 3.2vw, 14px);
+    font-weight: 700;
+    line-height: 1.5;
+    color: #ccc;
+  }
+
+  .vc-headline span { color: var(--accent); }
+
+  /* Drivers: single column on mobile, 3-col on wide */
+  .drivers-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  @media (min-width: 560px) {
+    .drivers-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .driver-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  /* On mobile, collapse driver desc by default, expand on tap */
+  .driver-card .driver-desc { display: none; }
+  .driver-card.active-card .driver-desc { display: block; }
+  @media (min-width: 560px) {
+    .driver-card .driver-desc { display: block; }
+  }
+
+  .driver-card:hover,
+  .driver-card.active-card { border-color: var(--accent); background: rgba(200,245,66,0.04); }
+
+  .driver-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+  }
+
+  .driver-pct {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(24px, 6vw, 30px);
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .driver-expand {
+    font-size: 10px;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+  }
+
+  @media (min-width: 560px) { .driver-expand { display: none; } }
+
+  .driver-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .driver-desc { font-size: 12px; color: #aaa; line-height: 1.55; margin-top: 8px; }
+
+  .driver-bar { height: 3px; border-radius: 2px; margin-top: 12px; }
+
+  .waterfall-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 18px;
+    margin-bottom: 16px;
+  }
+
+  .waterfall-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  #waterfall-svg { width: 100%; overflow: visible; display: block; }
+
+  .thesis-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 4px 4px 0;
+    padding: 16px 18px;
+    margin-top: 4px;
+  }
+
+  .thesis-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .thesis-text { font-size: 12px; color: #ccc; line-height: 1.7; }
+  .thesis-text strong { color: var(--text); }
+
+  .footnote {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    color: var(--muted);
+    margin-top: 24px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    letter-spacing: 0.04em;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="fund-name">Luminar Capital Partners</div>
+    <div class="deal-title">PROJECT MATRIX</div>
+    <div class="deal-subtitle">Our Partnership Thesis</div>
+  </div>
+  <div class="confidential">
+    STRICTLY CONFIDENTIAL<br>
+    April 2026<br>
+    Discussion only
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('earnout', this)">Earn-Out Calculator</button>
+  <button class="tab" onclick="switchTab('value', this)">Value Creation Story</button>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!--  PANEL 1 — EARN-OUT CALCULATOR           -->
+<!-- ══════════════════════════════════════════ -->
+<div id="panel-earnout" class="panel active">
+
+  <div class="calc-grid">
+    <div class="card">
+      <div class="card-label">Your FY2028 EBIT Target</div>
+      <div class="card-value accent">€6.3m</div>
+      <div class="card-sub">Management business plan</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Earn-Out at Your BP</div>
+      <div class="card-value accent">Full Payout</div>
+      <div class="card-sub">FY2028 EBIT, French GAAP</div>
+    </div>
+  </div>
+
+  <div class="slider-section">
+    <div class="slider-header">
+      <div class="slider-title">Adjust FY2028 EBIT</div>
+      <div class="slider-current" id="slider-display">€6.3m</div>
+    </div>
+
+    <input type="range" id="ebit-slider"
+      min="30" max="90" step="1" value="63"
+      oninput="updateCalc(this.value)">
+
+    <div class="slider-markers">
+      <div class="marker floor">
+        <div class="marker-tick"></div>
+        <div class="marker-label">FLOOR</div>
+        <div class="marker-value">€4.0m</div>
+      </div>
+      <div class="marker target">
+        <div class="marker-tick"></div>
+        <div class="marker-label">TARGET</div>
+        <div class="marker-value">€5.6m</div>
+      </div>
+      <div class="marker bp">
+        <div class="marker-tick"></div>
+        <div class="marker-label">YOUR BP</div>
+        <div class="marker-value">€6.3m</div>
+      </div>
+      <div class="marker hide-xs">
+        <div class="marker-tick"></div>
+        <div class="marker-label">MAX</div>
+        <div class="marker-value">€9.0m</div>
+      </div>
+    </div>
+
+    <div class="payout-bar-section">
+      <div class="payout-bar-label">
+        <span>Earn-Out Progress</span>
+        <span id="payout-pct-label">100% — Full payout triggered</span>
+      </div>
+      <div class="payout-track">
+        <div class="payout-fill" id="payout-fill" style="width:100%"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scenario-list" id="scenario-list"></div>
+
+  <div class="alignment-note">
+    <div class="alignment-note-icon">⟳</div>
+    <div class="alignment-note-text">
+      <strong>Our interests are directly aligned.</strong> There is no downside adjustment below the base price — the floor only defines where the mechanism activates. Your BP of €6.3m sits above the full-payout target of €5.6m. The MIP for Norbert and the management committee will be structured around the same EBIT milestones in the definitive agreements.
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!--  PANEL 2 — VALUE CREATION STORY          -->
+<!-- ══════════════════════════════════════════ -->
+<div id="panel-value" class="panel">
+
+  <div class="vc-intro">
+    <div class="vc-ev-change">
+      <div class="ev-box">
+        <div class="ev-label">Entry EV</div>
+        <div class="ev-number" style="color:var(--muted)">€44m</div>
+      </div>
+      <div class="ev-arrow">→</div>
+      <div class="ev-box">
+        <div class="ev-label">Target EV</div>
+        <div class="ev-number" style="color:var(--accent)">€66m</div>
+      </div>
+    </div>
+    <div class="vc-headline">
+      <span>72% of our value creation</span> depends on Matrix's operational performance — not financial engineering.
+    </div>
+  </div>
+
+  <div class="drivers-grid">
+    <div class="driver-card active-card" onclick="highlightDriver(this)">
+      <div class="driver-top">
+        <div class="driver-pct" style="color:var(--accent)">129%</div>
+        <div class="driver-expand">tap for detail</div>
+      </div>
+      <div class="driver-name">Revenue Growth</div>
+      <div class="driver-desc">The dominant driver. €18m → €42m revenue over the hold period — Expertise BU ramp, IoT expansion, AXA/EDF/BRED renewals. This is your team's execution.</div>
+      <div class="driver-bar" style="background:var(--accent);width:100%"></div>
+    </div>
+    <div class="driver-card" onclick="highlightDriver(this)">
+      <div class="driver-top">
+        <div class="driver-pct" style="color:var(--blue)">73%</div>
+        <div class="driver-expand">tap for detail</div>
+      </div>
+      <div class="driver-name">Balance Sheet Discipline</div>
+      <div class="driver-desc">€22.8m debt fully serviced from Matrix's own cash flows over the hold period — no asset stripping, no refinancing games.</div>
+      <div class="driver-bar" style="background:var(--blue);width:56%"></div>
+    </div>
+    <div class="driver-card" onclick="highlightDriver(this)">
+      <div class="driver-top">
+        <div class="driver-pct" style="color:#888">0%</div>
+        <div class="driver-expand">tap for detail</div>
+      </div>
+      <div class="driver-name">Multiple Arbitrage</div>
+      <div class="driver-desc">Zero. We enter at 10x and plan to exit at 10x. No valuation uplift assumed — value comes entirely from building the business, not from financial re-pricing.</div>
+      <div class="driver-bar" style="background:#333;width:0%"></div>
+    </div>
+  </div>
+
+  <div class="waterfall-section">
+    <div class="waterfall-title">Enterprise Value Bridge — €44m to €66m</div>
+    <svg id="waterfall-svg"></svg>
+  </div>
+
+  <div class="thesis-box">
+    <div class="thesis-title">The Bottom Line</div>
+    <div class="thesis-text">
+      We are not here to extract value. We are not relying on buying low and selling high. <strong>Our return depends entirely on Matrix growing its revenues from €24m to €42m</strong> — which is exactly what your business plan says you can do. Luminar's job is to provide capital, remove obstacles, and accelerate the Expertise and IoT platforms. <strong>Your job is to run and grow the business.</strong> The earn-out, the MIP, and the 0% multiple arbitrage assumption are our proof of that commitment.
+    </div>
+  </div>
+
+  <div class="footnote">
+    Enterprise value bridge based on Luminar's indicative projections. All figures in €m. Revenue growth contribution reflects 5-year CAGR ~12% in line with management business plan. Earn-out and MIP to be documented in definitive agreements. This document is for discussion purposes only and does not constitute a binding commitment. — April 2026
+  </div>
+
+</div>
+
+<script>
+// ── DATA ─────────────────────────────────────
+const FLOOR = 4.0, TARGET = 5.6, BP = 6.3;
+
+const tableScenarios = [
+  { ebit: 3.5, label: '€3.5m',          status: 'Below floor',       payout: 'Base price only',  pill: 'pill-red' },
+  { ebit: 4.0, label: '€4.0m',          status: 'Floor — no payout', payout: 'Base price only',  pill: 'pill-red' },
+  { ebit: 4.8, label: '€4.8m',          status: 'Partial (~50%)',    payout: '~50% of earn-out', pill: 'pill-blue' },
+  { ebit: 5.6, label: '€5.6m',          status: 'Full payout',       payout: 'Full earn-out',    pill: 'pill-green' },
+  { ebit: 6.3, label: '€6.3m  ← Your BP', status: 'Full payout',    payout: 'Full earn-out',    pill: 'pill-green' },
+  { ebit: 7.0, label: '€7.0m',          status: 'Full payout',       payout: 'Full earn-out',    pill: 'pill-green' },
+];
+
+// ── EARN-OUT LOGIC ────────────────────────────
+function calcPayout(ebit) {
+  if (ebit <= FLOOR) return 0;
+  if (ebit >= TARGET) return 1;
+  return (ebit - FLOOR) / (TARGET - FLOOR);
+}
+
+function fmt(n) { return '€' + n.toFixed(1) + 'm'; }
+
+function payoutLabel(pct, ebit) {
+  if (ebit <= FLOOR) return '0% — below floor';
+  if (ebit < TARGET) return Math.round(pct * 100) + '% — partial payout';
+  return '100% — full payout triggered';
+}
+
+function updateCalc(rawVal) {
+  const ebit = rawVal / 10;
+  document.getElementById('slider-display').textContent = fmt(ebit);
+  const pct = calcPayout(ebit);
+  document.getElementById('payout-fill').style.width = Math.max(0, Math.min(100, pct * 100)) + '%';
+  document.getElementById('payout-pct-label').textContent = payoutLabel(pct, ebit);
+  document.querySelectorAll('.scenario-row').forEach(row => {
+    row.classList.toggle('highlighted', Math.abs(parseFloat(row.dataset.ebit) - ebit) < 0.35);
+  });
+}
+
+function buildScenarios() {
+  const list = document.getElementById('scenario-list');
+  tableScenarios.forEach(s => {
+    const div = document.createElement('div');
+    div.className = 'scenario-row' + (Math.abs(s.ebit - BP) < 0.01 ? ' highlighted' : '');
+    div.dataset.ebit = s.ebit;
+    div.innerHTML = `
+      <div class="scenario-ebit">${s.label}</div>
+      <div class="scenario-status">${s.payout}</div>
+      <span class="status-pill ${s.pill}">${s.status}</span>
+    `;
+    list.appendChild(div);
+  });
+}
+
+// ── WATERFALL (SVG, responsive) ───────────────
+const wfData = [
+  { label: 'Entry EV',     value:  44, type: 'base',     colour: '#555' },
+  { label: 'Rev Growth',   value:  22, type: 'positive', colour: '#c8f542' },
+  { label: 'Debt Paydown', value:  10, type: 'positive', colour: '#4d9fff' },
+  { label: 'Cost Drag',    value: -10, type: 'negative', colour: '#774040' },
+  { label: 'Exit EV',      value:  66, type: 'base',     colour: '#888' },
+];
+
+function buildWaterfall() {
+  const svg = document.getElementById('waterfall-svg');
+  const W = svg.parentElement.clientWidth || 320;
+  const isMobile = W < 480;
+  const H = isMobile ? 200 : 230;
+  const PAD_T = 24, PAD_B = 28, PAD_L = 4, PAD_R = 4;
+  const chartW = W - PAD_L - PAD_R;
+  const chartH = H - PAD_T - PAD_B;
+  const n = wfData.length;
+  const colW = chartW / n;
+  const barW = colW * (isMobile ? 0.6 : 0.55);
+  const barGap = (colW - barW) / 2;
+  const SCALE_MAX = 82;
+  const yS = v => chartH * (1 - v / SCALE_MAX);
+
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.setAttribute('height', H);
+  svg.innerHTML = '';
+
+  const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  g.setAttribute('transform', `translate(${PAD_L},${PAD_T})`);
+  svg.appendChild(g);
+
+  // Axis
+  const ax = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  ax.setAttribute('x1', 0); ax.setAttribute('x2', chartW);
+  ax.setAttribute('y1', chartH); ax.setAttribute('y2', chartH);
+  ax.setAttribute('stroke', '#2a2a2a'); ax.setAttribute('stroke-width', '1');
+  g.appendChild(ax);
+
+  let base = 0;
+
+  wfData.forEach((d, i) => {
+    const x = i * colW + barGap;
+    let bBot, bTop;
+    if (d.type === 'base') { bBot = 0; bTop = d.value; }
+    else if (d.type === 'positive') { bBot = base; bTop = base + d.value; }
+    else { bBot = base + d.value; bTop = base; }
+
+    const rY = yS(bTop);
+    const rH = Math.max(Math.abs(yS(bBot) - yS(bTop)), 2);
+
+    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    rect.setAttribute('x', x); rect.setAttribute('y', rY);
+    rect.setAttribute('width', barW); rect.setAttribute('height', rH);
+    rect.setAttribute('fill', d.colour); rect.setAttribute('rx', '2');
+    g.appendChild(rect);
+
+    // Connector to next
+    if (i < n - 1) {
+      const cY = (d.type === 'negative') ? yS(bBot) : yS(bTop);
+      const nextX = (i + 1) * colW + barGap;
+      const conn = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      conn.setAttribute('x1', x + barW); conn.setAttribute('x2', nextX);
+      conn.setAttribute('y1', cY); conn.setAttribute('y2', cY);
+      conn.setAttribute('stroke', '#444'); conn.setAttribute('stroke-width', '1');
+      conn.setAttribute('stroke-dasharray', '3,3');
+      g.appendChild(conn);
+    }
+
+    // Value label
+    const lv = d.type === 'base' ? `€${d.value}m`
+             : d.value > 0 ? `+€${d.value}m` : `−€${Math.abs(d.value)}m`;
+    const lY = (d.type === 'negative') ? yS(bBot) + 13 : rY - 5;
+    const vt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    vt.setAttribute('x', x + barW / 2); vt.setAttribute('y', lY);
+    vt.setAttribute('text-anchor', 'middle');
+    vt.setAttribute('font-family', 'Space Mono, monospace');
+    vt.setAttribute('font-size', isMobile ? '9' : '10');
+    vt.setAttribute('fill', d.type === 'base' ? '#aaa' : d.colour);
+    vt.textContent = lv;
+    g.appendChild(vt);
+
+    // Category label
+    const ct = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    ct.setAttribute('x', x + barW / 2); ct.setAttribute('y', chartH + 17);
+    ct.setAttribute('text-anchor', 'middle');
+    ct.setAttribute('font-family', 'Space Mono, monospace');
+    ct.setAttribute('font-size', isMobile ? '8' : '9');
+    ct.setAttribute('fill', '#555');
+    ct.textContent = d.label;
+    g.appendChild(ct);
+
+    if (d.type === 'base' && i === 0) base = d.value;
+    else if (d.type !== 'base') base += d.value;
+  });
+}
+
+// ── DRIVER CARDS ──────────────────────────────
+function highlightDriver(el) {
+  const wasActive = el.classList.contains('active-card');
+  document.querySelectorAll('.driver-card').forEach(c => c.classList.remove('active-card'));
+  if (!wasActive) el.classList.add('active-card');
+}
+
+// ── TAB SWITCHING ─────────────────────────────
+function switchTab(name, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  btn.classList.add('active');
+  if (name === 'value') { setTimeout(buildWaterfall, 50); }
+}
+
+// ── RESIZE ────────────────────────────────────
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    if (document.getElementById('panel-value').classList.contains('active')) buildWaterfall();
+  }, 150);
+});
+
+// ── INIT ──────────────────────────────────────
+buildScenarios();
+buildWaterfall();
+updateCalc(63);
+</script>
+</body>
+</html>
