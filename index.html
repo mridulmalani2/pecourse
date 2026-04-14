@@ -572,6 +572,36 @@
   }
   input[type=range].orange-thumb::-moz-range-thumb { background: var(--orange); }
 
+  .ramp-btn-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 4px;
+    margin-bottom: 2px;
+  }
+
+  .ramp-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 12px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    transition: all 0.15s;
+    text-align: center;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .ramp-btn.active {
+    background: rgba(245,161,66,0.15);
+    border-color: var(--orange);
+    color: var(--orange);
+  }
+
   .exp-slider-note {
     font-size: 11px;
     color: var(--muted);
@@ -884,7 +914,7 @@
       <div class="exp-out-main accent" id="exp-ebit-val">€2.8m</div>
       <div class="exp-out-sub">Expertise contribution to FY2028 EBIT</div>
       <div class="exp-out-delta" id="exp-ebit-delta">
-        Without Expertise: core EBIT ~€3.5m<br>
+        The earn-out pays out above €5.6m FY2028 EBIT. Core business alone: ~€3.5m. Expertise bridges the gap.<br><br>
         <span id="exp-earnout-status">With Expertise: full payout triggered</span>
       </div>
     </div>
@@ -905,7 +935,7 @@
   </div>
 
   <div class="exp-assumption-box">
-    <strong>The honest caveat:</strong> None of this pipeline is signed. TCV is identified opportunity, not contracted revenue. If Expertise stays flat at €0.2m throughout the hold (zero conversion); the core IT outsourcing business still generates ~€3.5m FY2028 EBIT. That still triggers partial earn-out and still supports a viable exit. <strong>Expertise is upside, not load-bearing.</strong> We are showing you this model because we believe it, not because we need you to believe it to make the numbers work.
+    <strong>The honest caveat:</strong> None of this pipeline is signed. TCV is identified opportunity, not contracted revenue. If Expertise stays flat at €0.2m throughout the hold (zero conversion); the core IT outsourcing business still generates ~€3.5m FY2028 EBIT. That still triggers partial earn-out and still supports a viable exit. <strong>Expertise is upside, not load-bearing.</strong>
   </div>
 
   <div class="footnote">
@@ -1095,12 +1125,18 @@ function getExpertiseRevenues(convPct, rampKey) {
   return annualRevs; // [FY25, FY26, FY27, FY28, FY29]
 }
 
+function setRamp(val, btn) {
+  window._rampKey = val;
+  document.querySelectorAll('.ramp-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  updateExpertise();
+}
+
 function updateExpertise() {
   const convPct = parseInt(document.getElementById('conv-slider').value);
-  const rampKey = parseInt(document.getElementById('ramp-slider').value);
+  const rampKey = window._rampKey || 2;
 
   document.getElementById('conv-display').textContent = convPct + '%';
-  document.getElementById('ramp-display').textContent = RAMP_PROFILES[rampKey].label;
   document.getElementById('ramp-note').textContent = RAMP_PROFILES[rampKey].note;
 
   const revs = getExpertiseRevenues(convPct, rampKey);
