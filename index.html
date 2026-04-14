@@ -916,7 +916,7 @@
       <div class="exp-out-sub">Expertise contribution to FY2028 EBIT</div>
       <div class="exp-out-delta" id="exp-ebit-delta">
         The earn-out pays out above €5.6m FY2028 EBIT. Core business alone: ~€3.5m. Expertise bridges the gap.<br><br>
-        <span id="exp-earnout-status">With Expertise: full payout triggered</span>
+        <span id="exp-earnout-status">Earn-out status: full payout triggered</span>
       </div>
     </div>
     <div class="exp-output-card ev-card">
@@ -1115,15 +1115,8 @@ const RAMP_PROFILES = {
 
 function getExpertiseRevenues(convPct, rampKey) {
   const totalWon = TCV * (convPct / 100); // total revenue won over 5 years
-  const w = RAMP_PROFILES[rampKey].weights;
-  // annual revenue = total won * weight increment (not cumulative)
-  // treat weights as cumulative % of run-rate reached, annual = prev to current step
-  const annualRevs = [];
-  for (let i = 0; i < 5; i++) {
-    const annualFrac = i === 0 ? w[0] : (w[i] - w[i-1]);
-    annualRevs.push(totalWon * Math.max(0, annualFrac));
-  }
-  return annualRevs; // [FY25, FY26, FY27, FY28, FY29]
+  const f = RAMP_PROFILES[rampKey].annualFrac; // direct annual fraction of totalWon per year
+  return f.map(frac => totalWon * frac); // [FY25, FY26, FY27, FY28, FY29]
 }
 
 function setRamp(val, btn) {
@@ -1150,13 +1143,13 @@ function updateExpertise() {
   const earnoutPct = calcPayout(totalEbitFY28);
   let earnoutStatus;
   if (totalEbitFY28 >= TARGET) {
-    earnoutStatus = 'With Expertise: full payout triggered';
+    earnoutStatus = 'Earn-out status: full payout triggered';
     document.getElementById('exp-ebit-val').style.color = 'var(--accent)';
   } else if (totalEbitFY28 > FLOOR) {
-    earnoutStatus = 'With Expertise: ' + Math.round(earnoutPct * 100) + '% payout';
+    earnoutStatus = 'Earn-out status: ' + Math.round(earnoutPct * 100) + '% of max payout unlocked';
     document.getElementById('exp-ebit-val').style.color = 'var(--orange)';
   } else {
-    earnoutStatus = 'With Expertise: below floor, no earn-out';
+    earnoutStatus = 'Earn-out status: below €4.0m floor, no payout';
     document.getElementById('exp-ebit-val').style.color = 'var(--red)';
   }
   document.getElementById('exp-earnout-status').textContent = earnoutStatus;
