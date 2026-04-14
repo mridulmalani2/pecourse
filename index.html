@@ -897,11 +897,12 @@
     <div class="exp-slider-block">
       <div class="exp-slider-header">
         <div class="exp-slider-label">Revenue Ramp Speed</div>
-        <div class="exp-slider-val" id="ramp-display">Medium</div>
       </div>
-      <input type="range" class="orange-thumb" id="ramp-slider"
-        min="1" max="3" step="1" value="2"
-        oninput="updateExpertise()">
+      <div class="ramp-btn-group">
+        <button class="ramp-btn" data-val="1" onclick="setRamp(1, this)">Slow</button>
+        <button class="ramp-btn active" data-val="2" onclick="setRamp(2, this)">Medium</button>
+        <button class="ramp-btn" data-val="3" onclick="setRamp(3, this)">Fast</button>
+      </div>
       <div class="exp-slider-note" id="ramp-note">
         Medium: revenue builds steadily: 10% by FY2026, 40% by FY2027, full run-rate by FY2028.
       </div>
