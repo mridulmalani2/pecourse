@@ -915,7 +915,7 @@
       <div class="exp-out-main accent" id="exp-ebit-val">€2.8m</div>
       <div class="exp-out-sub">Expertise contribution to FY2028 EBIT</div>
       <div class="exp-out-delta" id="exp-ebit-delta">
-        The earn-out pays out above €5.6m FY2028 EBIT. Core business alone: ~€3.5m. Expertise bridges the gap.<br><br>
+        Earn-out tests FY2028 EBIT: needs €5.6m for full payout, €4.0m floor. Core business projects ~€3.5m EBIT without Expertise. The gap to full payout: €2.1m. That is what the Expertise BU needs to deliver.<br><br>
         <span id="exp-earnout-status">Earn-out status: full payout triggered</span>
       </div>
     </div>
@@ -924,7 +924,7 @@
       <div class="exp-out-main" style="color:var(--blue)" id="exp-ev-val">+€28m</div>
       <div class="exp-out-sub">Additional EV at exit (10x applied to Expertise EBITDA)</div>
       <div class="exp-out-delta" id="exp-ev-delta">
-        Base EV without Expertise: ~€38m<br>
+        Base EV without Expertise: ~€40m<br>
         <span id="exp-ev-with">With Expertise: ~€66m</span>
       </div>
     </div>
@@ -1108,9 +1108,9 @@ const CORE_EBIT_FY28 = 3.5;// core business EBIT excl. Expertise
 
 // Ramp profiles: fraction of total won revenue recognised by year [FY25,FY26,FY27,FY28,FY29]
 const RAMP_PROFILES = {
-  1: { label: 'Slow',   note: 'Slow: conservative ramp: 5% by FY2026, 20% by FY2027, 50% by FY2028, full run-rate by FY2029.', weights: [0, 0.05, 0.20, 0.50, 1.0] },
-  2: { label: 'Medium', note: 'Medium: revenue builds steadily: 10% by FY2026, 40% by FY2027, full run-rate by FY2028.',     weights: [0, 0.10, 0.40, 1.0,  1.0] },
-  3: { label: 'Fast',   note: 'Fast: aggressive ramp: 25% by FY2026, 70% by FY2027, full run-rate by FY2028.',               weights: [0, 0.25, 0.70, 1.0,  1.0] },
+  1: { label: 'Slow',   note: 'Slow: back-loaded. Contracts take time to close and onboard. Little revenue early; bulk arrives FY2028-2029.', annualFrac: [0, 0.05, 0.10, 0.25, 0.60] },
+  2: { label: 'Medium', note: 'Medium: steady build. Revenue ramps evenly across the hold, reaching meaningful scale by FY2027 and full run-rate in FY2028.',    annualFrac: [0, 0.10, 0.20, 0.30, 0.40] },
+  3: { label: 'Fast',   note: 'Fast: front-loaded. Contracts close quickly off warm pipeline; by FY2027 already at scale, maximising FY2028 earn-out contribution.',  annualFrac: [0, 0.20, 0.25, 0.35, 0.20] },
 };
 
 function getExpertiseRevenues(convPct, rampKey) {
@@ -1157,7 +1157,7 @@ function updateExpertise() {
   // EV uplift: sum of all years' EBITDA × exit multiple (simplified: FY28 run-rate × multiple)
   const expEbitdaFY28 = expRevFY28 * EBITDA_MARGIN;
   const evUplift = expEbitdaFY28 * EXIT_MULTIPLE;
-  const totalEV = 38 + evUplift; // 38m base EV without Expertise
+  const totalEV = 40 + evUplift; // 40m base EV without Expertise (core EBIT €3.5m / 0.875 × 10x)
   document.getElementById('exp-ev-val').textContent = '+' + fmt(Math.round(evUplift * 10) / 10);
   document.getElementById('exp-ev-with').textContent = 'With Expertise: ~' + fmt(Math.round(totalEV * 10) / 10);
 
