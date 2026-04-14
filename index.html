@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Luminar Capital Partners: Project Matrix</title>
+<title>Luminar Capital Partners - Project Matrix</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
 
@@ -20,6 +20,7 @@
     --accent-dim: rgba(200, 245, 66, 0.12);
     --red: #ff4d4d;
     --blue: #4d9fff;
+    --orange: #f5a142;
   }
 
   html { -webkit-text-size-adjust: 100%; }
@@ -35,7 +36,7 @@
     margin: 0 auto;
   }
 
-  /* ── HEADER ── */
+  /* HEADER */
   .header {
     display: flex;
     justify-content: space-between;
@@ -80,10 +81,10 @@
     line-height: 1.7;
   }
 
-  /* ── TABS ── */
+  /* TABS */
   .tabs {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 2px;
     margin-bottom: 20px;
     background: var(--surface);
@@ -93,10 +94,10 @@
 
   .tab {
     font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.08em;
+    font-size: 8px;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    padding: 10px 8px;
+    padding: 10px 6px;
     border-radius: 2px;
     cursor: pointer;
     color: var(--muted);
@@ -106,6 +107,7 @@
     text-align: center;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    line-height: 1.4;
   }
 
   .tab.active {
@@ -117,7 +119,7 @@
   .panel { display: none; }
   .panel.active { display: block; }
 
-  /* ── CARDS ── */
+  /* CARDS */
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -151,7 +153,7 @@
     line-height: 1.4;
   }
 
-  /* ── PANEL 1: EARN-OUT ── */
+  /* PANEL 1: EARN-OUT */
   .calc-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -223,7 +225,6 @@
     border: 3px solid var(--bg);
   }
 
-  /* Slim 3-marker row (hide RANGE MAX on very small screens) */
   .slider-markers {
     display: flex;
     justify-content: space-between;
@@ -284,7 +285,6 @@
     transition: width 0.2s ease;
   }
 
-  /* Mobile-optimised scenario cards instead of a 4-col table */
   .scenario-list {
     display: flex;
     flex-direction: column;
@@ -340,6 +340,7 @@
   .pill-red { background: rgba(255,77,77,0.15); color: var(--red); }
   .pill-green { background: rgba(200,245,66,0.15); color: var(--accent); }
   .pill-blue { background: rgba(77,159,255,0.15); color: var(--blue); }
+  .pill-orange { background: rgba(245,161,66,0.15); color: var(--orange); }
 
   .alignment-note {
     background: var(--accent-dim);
@@ -357,7 +358,7 @@
   .alignment-note-text { font-size: 12px; color: var(--text); line-height: 1.6; }
   .alignment-note-text strong { color: var(--accent); }
 
-  /* ── PANEL 2: VALUE CREATION ── */
+  /* PANEL 2: VALUE CREATION */
   .vc-intro {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -402,7 +403,6 @@
 
   .vc-headline span { color: var(--accent); }
 
-  /* Drivers: single column on mobile, 3-col on wide */
   .drivers-grid {
     display: flex;
     flex-direction: column;
@@ -425,7 +425,6 @@
     touch-action: manipulation;
   }
 
-  /* On mobile, collapse driver desc by default, expand on tap */
   .driver-card .driver-desc { display: none; }
   .driver-card.active-card .driver-desc { display: block; }
   @media (min-width: 560px) {
@@ -510,6 +509,165 @@
   .thesis-text { font-size: 12px; color: #ccc; line-height: 1.7; }
   .thesis-text strong { color: var(--text); }
 
+  /* PANEL 3: EXPERTISE BU */
+  .exp-intro {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--orange);
+    border-radius: 0 4px 4px 0;
+    padding: 16px 18px;
+    margin-bottom: 16px;
+  }
+
+  .exp-intro-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.14em;
+    color: var(--orange);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .exp-intro-text { font-size: 12px; color: #ccc; line-height: 1.7; }
+  .exp-intro-text strong { color: var(--text); }
+
+  .exp-sliders {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px 18px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .exp-slider-block { display: flex; flex-direction: column; gap: 0; }
+
+  .exp-slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 14px;
+  }
+
+  .exp-slider-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .exp-slider-val {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(16px, 4.5vw, 20px);
+    font-weight: 700;
+    color: var(--orange);
+  }
+
+  input[type=range].orange-thumb::-webkit-slider-thumb {
+    background: var(--orange);
+    box-shadow: 0 0 0 1px var(--orange);
+  }
+  input[type=range].orange-thumb::-moz-range-thumb { background: var(--orange); }
+
+  .exp-slider-note {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  /* Output: two columns side by side */
+  .exp-output-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 380px) {
+    .exp-output-grid { grid-template-columns: 1fr; }
+  }
+
+  .exp-output-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 16px;
+  }
+
+  .exp-output-card.earn-card { border-top: 2px solid var(--accent); }
+  .exp-output-card.ev-card   { border-top: 2px solid var(--blue); }
+
+  .exp-out-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .exp-out-main {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(20px, 5.5vw, 26px);
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .exp-out-sub {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .exp-out-delta {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .exp-out-delta span { font-weight: 700; }
+
+  /* Ramp chart */
+  .exp-ramp-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 18px;
+    margin-bottom: 16px;
+  }
+
+  .exp-ramp-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  #ramp-svg { width: 100%; overflow: visible; display: block; }
+
+  .exp-assumption-box {
+    background: rgba(245,161,66,0.08);
+    border: 1px solid rgba(245,161,66,0.25);
+    border-radius: 4px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    font-size: 12px;
+    color: #ccc;
+    line-height: 1.7;
+  }
+
+  .exp-assumption-box strong { color: var(--orange); }
+
   .footnote {
     font-family: 'Space Mono', monospace;
     font-size: 8px;
@@ -538,13 +696,12 @@
 </div>
 
 <div class="tabs">
-  <button class="tab active" onclick="switchTab('earnout', this)">Earn-Out Calculator</button>
-  <button class="tab" onclick="switchTab('value', this)">Value Creation Story</button>
+  <button class="tab active" onclick="switchTab('earnout', this)">Earn-Out<br>Calculator</button>
+  <button class="tab" onclick="switchTab('value', this)">Value<br>Creation</button>
+  <button class="tab" onclick="switchTab('expertise', this)">Expertise<br>BU Model</button>
 </div>
 
-<!-- ══════════════════════════════════════════ -->
-<!--  PANEL 1: EARN-OUT CALCULATOR           -->
-<!-- ══════════════════════════════════════════ -->
+<!-- PANEL 1: EARN-OUT -->
 <div id="panel-earnout" class="panel active">
 
   <div class="calc-grid">
@@ -596,7 +753,7 @@
     <div class="payout-bar-section">
       <div class="payout-bar-label">
         <span>Earn-Out Progress</span>
-        <span id="payout-pct-label">100% Full payout triggered</span>
+        <span id="payout-pct-label">100% — Full payout triggered</span>
       </div>
       <div class="payout-track">
         <div class="payout-fill" id="payout-fill" style="width:100%"></div>
@@ -607,17 +764,15 @@
   <div class="scenario-list" id="scenario-list"></div>
 
   <div class="alignment-note">
-    <div class="alignment-note-icon">⟳</div>
+    <div class="alignment-note-icon">&#8635;</div>
     <div class="alignment-note-text">
-      <strong>Our interests are directly aligned.</strong> There is no downside adjustment below the base price. The floor only defines where the mechanism activates. Your BP of €6.3m sits above the full-payout target of €5.6m. The MIP for Norbert and the management committee will be structured around the same EBIT milestones in the definitive agreements.
+      <strong>Our interests are directly aligned.</strong> There is no downside adjustment below the base price — the floor only defines where the mechanism activates. Your BP of €6.3m sits above the full-payout target of €5.6m. The MIP for Norbert and the management committee will be structured around the same EBIT milestones in the definitive agreements.
     </div>
   </div>
 
 </div>
 
-<!-- ══════════════════════════════════════════ -->
-<!--  PANEL 2: VALUE CREATION STORY          -->
-<!-- ══════════════════════════════════════════ -->
+<!-- PANEL 2: VALUE CREATION -->
 <div id="panel-value" class="panel">
 
   <div class="vc-intro">
@@ -633,7 +788,7 @@
       </div>
     </div>
     <div class="vc-headline">
-      <span>72% of our value creation</span> depends on Matrix's operational performance, not financial engineering.
+      <span>72% of our value creation</span> depends on Matrix's operational performance — not financial engineering.
     </div>
   </div>
 
@@ -644,7 +799,7 @@
         <div class="driver-expand">tap for detail</div>
       </div>
       <div class="driver-name">Revenue Growth</div>
-      <div class="driver-desc">The dominant driver. €18m → €42m revenue over the hold period: Expertise BU ramp, IoT expansion, AXA/EDF/BRED renewals. This is your team's execution.</div>
+      <div class="driver-desc">The dominant driver. €18m → €42m revenue over the hold period — Expertise BU ramp, IoT expansion, AXA/EDF/BRED renewals. This is your team's execution.</div>
       <div class="driver-bar" style="background:var(--accent);width:100%"></div>
     </div>
     <div class="driver-card" onclick="highlightDriver(this)">
@@ -653,7 +808,7 @@
         <div class="driver-expand">tap for detail</div>
       </div>
       <div class="driver-name">Balance Sheet Discipline</div>
-      <div class="driver-desc">€22.8m debt fully serviced from Matrix's own cash flows over the hold period. No asset stripping, no refinancing games.</div>
+      <div class="driver-desc">€22.8m debt fully serviced from Matrix's own cash flows over the hold period — no asset stripping, no refinancing games.</div>
       <div class="driver-bar" style="background:var(--blue);width:56%"></div>
     </div>
     <div class="driver-card" onclick="highlightDriver(this)">
@@ -662,40 +817,114 @@
         <div class="driver-expand">tap for detail</div>
       </div>
       <div class="driver-name">Multiple Arbitrage</div>
-      <div class="driver-desc">Zero. We enter at 10x and plan to exit at 10x. No valuation uplift assumed. Value comes entirely from building the business, not from financial re-pricing.</div>
+      <div class="driver-desc">Zero. We enter at 10x and plan to exit at 10x. No valuation uplift assumed — value comes entirely from building the business, not from financial re-pricing.</div>
       <div class="driver-bar" style="background:#333;width:0%"></div>
     </div>
   </div>
 
   <div class="waterfall-section">
-    <div class="waterfall-title">Enterprise Value Bridge: EUR 44m to EUR 66m</div>
+    <div class="waterfall-title">Enterprise Value Bridge — €44m to €66m</div>
     <svg id="waterfall-svg"></svg>
   </div>
 
   <div class="thesis-box">
     <div class="thesis-title">The Bottom Line</div>
     <div class="thesis-text">
-      We are not here to extract value. We are not relying on buying low and selling high. <strong>Our return depends entirely on Matrix growing its revenues from EUR 24m to EUR 42m</strong>, which is exactly what your business plan says you can do. Luminar's job is to provide capital, remove obstacles, and accelerate the Expertise and IoT platforms. <strong>Your job is to run and grow the business.</strong> The earn-out, the MIP, and the 0% multiple arbitrage assumption are our proof of that commitment.
+      We are not here to extract value. We are not relying on buying low and selling high. <strong>Our return depends entirely on Matrix growing its revenues from €24m to €42m</strong> — which is exactly what your business plan says you can do. Luminar's job is to provide capital, remove obstacles, and accelerate the Expertise and IoT platforms. <strong>Your job is to run and grow the business.</strong> The earn-out, the MIP, and the 0% multiple arbitrage assumption are our proof of that commitment.
     </div>
   </div>
 
   <div class="footnote">
-    Enterprise value bridge based on Luminar's indicative projections. All figures in €m. Revenue growth contribution reflects 5-year CAGR ~12% in line with management business plan. Earn-out and MIP to be documented in definitive agreements. This document is for discussion purposes only and does not constitute a binding commitment. April 2026
+    Enterprise value bridge based on Luminar's indicative projections. All figures in €m. Revenue growth contribution reflects 5-year CAGR ~12% in line with management business plan. Earn-out and MIP to be documented in definitive agreements. This document is for discussion purposes only and does not constitute a binding commitment. — April 2026
+  </div>
+
+</div>
+
+<!-- PANEL 3: EXPERTISE BU -->
+<div id="panel-expertise" class="panel">
+
+  <div class="exp-intro">
+    <div class="exp-intro-label">The Growth Bet</div>
+    <div class="exp-intro-text">
+      The Expertise BU is advanced IT infrastructure engineering — deploying and designing full client environments, not just maintaining them. Today it is <strong>1% of revenue (€0.2m)</strong>. We have identified <strong>€13.4m of pipeline TCV</strong> — named opportunities, mostly with clients who already trust Matrix. The question is how much converts, and how fast. Adjust the sliders to model your own view.
+    </div>
+  </div>
+
+  <div class="exp-sliders">
+    <div class="exp-slider-block">
+      <div class="exp-slider-header">
+        <div class="exp-slider-label">Pipeline Conversion Rate</div>
+        <div class="exp-slider-val" id="conv-display">80%</div>
+      </div>
+      <input type="range" class="orange-thumb" id="conv-slider"
+        min="10" max="100" step="5" value="80"
+        oninput="updateExpertise()">
+      <div class="exp-slider-note">
+        Our base case: 80% of the €13.4m TCV pipeline converts over 5 years. The pipeline is warm — existing clients, inbound upsell — not cold outbound.
+      </div>
+    </div>
+
+    <div class="exp-slider-block">
+      <div class="exp-slider-header">
+        <div class="exp-slider-label">Revenue Ramp Speed</div>
+        <div class="exp-slider-val" id="ramp-display">Medium</div>
+      </div>
+      <input type="range" class="orange-thumb" id="ramp-slider"
+        min="1" max="3" step="1" value="2"
+        oninput="updateExpertise()">
+      <div class="exp-slider-note" id="ramp-note">
+        Medium: revenue builds steadily — 10% by FY2026, 40% by FY2027, full run-rate by FY2028.
+      </div>
+    </div>
+  </div>
+
+  <div class="exp-output-grid">
+    <div class="exp-output-card earn-card">
+      <div class="exp-out-label">Earn-Out Impact</div>
+      <div class="exp-out-main accent" id="exp-ebit-val">€2.8m</div>
+      <div class="exp-out-sub">Expertise contribution to FY2028 EBIT</div>
+      <div class="exp-out-delta" id="exp-ebit-delta">
+        Without Expertise: core EBIT ~€3.5m<br>
+        <span id="exp-earnout-status">With Expertise: full payout triggered</span>
+      </div>
+    </div>
+    <div class="exp-output-card ev-card">
+      <div class="exp-out-label">Enterprise Value Uplift</div>
+      <div class="exp-out-main" style="color:var(--blue)" id="exp-ev-val">+€28m</div>
+      <div class="exp-out-sub">Additional EV at exit (10x applied to Expertise EBITDA)</div>
+      <div class="exp-out-delta" id="exp-ev-delta">
+        Base EV without Expertise: ~€38m<br>
+        <span id="exp-ev-with">With Expertise: ~€66m</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="exp-ramp-section">
+    <div class="exp-ramp-title">Expertise Revenue Ramp — FY2025 to FY2029 (€m)</div>
+    <svg id="ramp-svg"></svg>
+  </div>
+
+  <div class="exp-assumption-box">
+    <strong>The honest caveat:</strong> None of this pipeline is signed. TCV is identified opportunity, not contracted revenue. If Expertise stays flat at €0.2m throughout the hold — zero conversion — the core IT outsourcing business still generates ~€3.5m FY2028 EBIT. That still triggers partial earn-out and still supports a viable exit. <strong>Expertise is upside, not load-bearing.</strong> We are showing you this model because we believe it — not because we need you to believe it to make the numbers work.
+  </div>
+
+  <div class="footnote">
+    Expertise BU projections based on identified pipeline of €13.4m TCV and management business plan. EBIT margin on Expertise revenue assumed at 28% (senior engineer-heavy cost structure). EV uplift applies 10x exit multiple to incremental EBITDA. All figures indicative and subject to full DD. — April 2026
   </div>
 
 </div>
 
 <script>
-// ── DATA ─────────────────────────────────────
+// ── SHARED DATA ───────────────────────────────
 const FLOOR = 4.0, TARGET = 5.6, BP = 6.3;
 
 const tableScenarios = [
-  { ebit: 3.5, label: '€3.5m',          status: 'Below floor',       payout: 'Base price only',  pill: 'pill-red' },
-  { ebit: 4.0, label: '€4.0m',          status: 'Floor: no payout', payout: 'Base price only',  pill: 'pill-red' },
-  { ebit: 4.8, label: '€4.8m',          status: 'Partial (~50%)',    payout: '~50% of earn-out', pill: 'pill-blue' },
-  { ebit: 5.6, label: '€5.6m',          status: 'Full payout',       payout: 'Full earn-out',    pill: 'pill-green' },
-  { ebit: 6.3, label: '€6.3m  ← Your BP', status: 'Full payout',    payout: 'Full earn-out',    pill: 'pill-green' },
-  { ebit: 7.0, label: '€7.0m',          status: 'Full payout',       payout: 'Full earn-out',    pill: 'pill-green' },
+  { ebit: 3.5, label: '€3.5m',             status: 'Below floor',       payout: 'Base price only',  pill: 'pill-red' },
+  { ebit: 4.0, label: '€4.0m',             status: 'Floor — no payout', payout: 'Base price only',  pill: 'pill-red' },
+  { ebit: 4.8, label: '€4.8m',             status: 'Partial (~50%)',    payout: '~50% of earn-out', pill: 'pill-blue' },
+  { ebit: 5.6, label: '€5.6m',             status: 'Full payout',       payout: 'Full earn-out',    pill: 'pill-green' },
+  { ebit: 6.3, label: '€6.3m  (Your BP)',  status: 'Full payout',       payout: 'Full earn-out',    pill: 'pill-green' },
+  { ebit: 7.0, label: '€7.0m',             status: 'Full payout',       payout: 'Full earn-out',    pill: 'pill-green' },
 ];
 
 // ── EARN-OUT LOGIC ────────────────────────────
@@ -708,9 +937,9 @@ function calcPayout(ebit) {
 function fmt(n) { return '€' + n.toFixed(1) + 'm'; }
 
 function payoutLabel(pct, ebit) {
-  if (ebit <= FLOOR) return '0% below floor';
-  if (ebit < TARGET) return Math.round(pct * 100) + '% partial payout';
-  return '100% full payout triggered';
+  if (ebit <= FLOOR) return '0% — below floor';
+  if (ebit < TARGET) return Math.round(pct * 100) + '% — partial payout';
+  return '100% — full payout triggered';
 }
 
 function updateCalc(rawVal) {
@@ -739,7 +968,7 @@ function buildScenarios() {
   });
 }
 
-// ── WATERFALL (SVG, responsive) ───────────────
+// ── WATERFALL ─────────────────────────────────
 const wfData = [
   { label: 'Entry EV',     value:  44, type: 'base',     colour: '#555' },
   { label: 'Rev Growth',   value:  22, type: 'positive', colour: '#c8f542' },
@@ -771,7 +1000,6 @@ function buildWaterfall() {
   g.setAttribute('transform', `translate(${PAD_L},${PAD_T})`);
   svg.appendChild(g);
 
-  // Axis
   const ax = document.createElementNS('http://www.w3.org/2000/svg', 'line');
   ax.setAttribute('x1', 0); ax.setAttribute('x2', chartW);
   ax.setAttribute('y1', chartH); ax.setAttribute('y2', chartH);
@@ -796,7 +1024,6 @@ function buildWaterfall() {
     rect.setAttribute('fill', d.colour); rect.setAttribute('rx', '2');
     g.appendChild(rect);
 
-    // Connector to next
     if (i < n - 1) {
       const cY = (d.type === 'negative') ? yS(bBot) : yS(bTop);
       const nextX = (i + 1) * colW + barGap;
@@ -808,7 +1035,6 @@ function buildWaterfall() {
       g.appendChild(conn);
     }
 
-    // Value label
     const lv = d.type === 'base' ? `€${d.value}m`
              : d.value > 0 ? `+€${d.value}m` : `−€${Math.abs(d.value)}m`;
     const lY = (d.type === 'negative') ? yS(bBot) + 13 : rY - 5;
@@ -821,7 +1047,6 @@ function buildWaterfall() {
     vt.textContent = lv;
     g.appendChild(vt);
 
-    // Category label
     const ct = document.createElementNS('http://www.w3.org/2000/svg', 'text');
     ct.setAttribute('x', x + barW / 2); ct.setAttribute('y', chartH + 17);
     ct.setAttribute('text-anchor', 'middle');
@@ -834,6 +1059,181 @@ function buildWaterfall() {
     if (d.type === 'base' && i === 0) base = d.value;
     else if (d.type !== 'base') base += d.value;
   });
+}
+
+function highlightDriver(el) {
+  const wasActive = el.classList.contains('active-card');
+  document.querySelectorAll('.driver-card').forEach(c => c.classList.remove('active-card'));
+  if (!wasActive) el.classList.add('active-card');
+}
+
+// ── EXPERTISE BU MODEL ────────────────────────
+// Constants
+const TCV = 13.4;          // total pipeline TCV €m
+const EBIT_MARGIN = 0.28;  // Expertise EBIT margin (senior engineer mix)
+const EBITDA_MARGIN = 0.32;// slightly higher for EV calc
+const EXIT_MULTIPLE = 10;
+const CORE_EBIT_FY28 = 3.5;// core business EBIT excl. Expertise
+
+// Ramp profiles: fraction of total won revenue recognised by year [FY25,FY26,FY27,FY28,FY29]
+const RAMP_PROFILES = {
+  1: { label: 'Slow',   note: 'Slow: conservative ramp — 5% by FY2026, 20% by FY2027, 50% by FY2028, full run-rate FY2029.', weights: [0, 0.05, 0.20, 0.50, 1.0] },
+  2: { label: 'Medium', note: 'Medium: revenue builds steadily — 10% by FY2026, 40% by FY2027, full run-rate by FY2028.',     weights: [0, 0.10, 0.40, 1.0,  1.0] },
+  3: { label: 'Fast',   note: 'Fast: aggressive ramp — 25% by FY2026, 70% by FY2027, full run-rate by FY2028.',               weights: [0, 0.25, 0.70, 1.0,  1.0] },
+};
+
+function getExpertiseRevenues(convPct, rampKey) {
+  const totalWon = TCV * (convPct / 100); // total revenue won over 5 years
+  const w = RAMP_PROFILES[rampKey].weights;
+  // annual revenue = total won * weight increment (not cumulative)
+  // treat weights as cumulative % of run-rate reached, annual = prev to current step
+  const annualRevs = [];
+  for (let i = 0; i < 5; i++) {
+    const annualFrac = i === 0 ? w[0] : (w[i] - w[i-1]);
+    annualRevs.push(totalWon * Math.max(0, annualFrac));
+  }
+  return annualRevs; // [FY25, FY26, FY27, FY28, FY29]
+}
+
+function updateExpertise() {
+  const convPct = parseInt(document.getElementById('conv-slider').value);
+  const rampKey = parseInt(document.getElementById('ramp-slider').value);
+
+  document.getElementById('conv-display').textContent = convPct + '%';
+  document.getElementById('ramp-display').textContent = RAMP_PROFILES[rampKey].label;
+  document.getElementById('ramp-note').textContent = RAMP_PROFILES[rampKey].note;
+
+  const revs = getExpertiseRevenues(convPct, rampKey);
+  const expRevFY28 = revs[3]; // index 3 = FY2028
+  const expEbitFY28 = expRevFY28 * EBIT_MARGIN;
+  const totalEbitFY28 = CORE_EBIT_FY28 + expEbitFY28;
+
+  // Earn-out impact
+  document.getElementById('exp-ebit-val').textContent = fmt(expEbitFY28);
+  const earnoutPct = calcPayout(totalEbitFY28);
+  let earnoutStatus;
+  if (totalEbitFY28 >= TARGET) {
+    earnoutStatus = 'With Expertise: full payout triggered';
+    document.getElementById('exp-ebit-val').style.color = 'var(--accent)';
+  } else if (totalEbitFY28 > FLOOR) {
+    earnoutStatus = 'With Expertise: ' + Math.round(earnoutPct * 100) + '% payout';
+    document.getElementById('exp-ebit-val').style.color = 'var(--orange)';
+  } else {
+    earnoutStatus = 'With Expertise: below floor — no earn-out';
+    document.getElementById('exp-ebit-val').style.color = 'var(--red)';
+  }
+  document.getElementById('exp-earnout-status').textContent = earnoutStatus;
+
+  // EV uplift: sum of all years' EBITDA × exit multiple (simplified: FY28 run-rate × multiple)
+  const expEbitdaFY28 = expRevFY28 * EBITDA_MARGIN;
+  const evUplift = expEbitdaFY28 * EXIT_MULTIPLE;
+  const totalEV = 38 + evUplift; // 38m base EV without Expertise
+  document.getElementById('exp-ev-val').textContent = '+' + fmt(Math.round(evUplift * 10) / 10);
+  document.getElementById('exp-ev-with').textContent = 'With Expertise: ~' + fmt(Math.round(totalEV * 10) / 10);
+
+  // Ramp chart
+  buildRampChart(revs, convPct);
+}
+
+function buildRampChart(revs, convPct) {
+  const svg = document.getElementById('ramp-svg');
+  const W = svg.parentElement.clientWidth || 300;
+  const isMobile = W < 440;
+  const H = isMobile ? 160 : 190;
+  const PAD_T = 20, PAD_B = 30, PAD_L = 32, PAD_R = 8;
+  const chartW = W - PAD_L - PAD_R;
+  const chartH = H - PAD_T - PAD_B;
+
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.setAttribute('height', H);
+  svg.innerHTML = '';
+
+  const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  g.setAttribute('transform', `translate(${PAD_L},${PAD_T})`);
+  svg.appendChild(g);
+
+  const years = ['FY25', 'FY26', 'FY27', 'FY28', 'FY29'];
+  const n = years.length;
+  const maxRev = Math.max(...revs, 0.5);
+  const SCALE_MAX = Math.ceil(maxRev * 1.2 * 10) / 10;
+  const yS = v => chartH * (1 - v / SCALE_MAX);
+  const colW = chartW / n;
+  const barW = colW * 0.55;
+  const barGap = (colW - barW) / 2;
+
+  // Axis
+  const ax = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  ax.setAttribute('x1', 0); ax.setAttribute('x2', chartW);
+  ax.setAttribute('y1', chartH); ax.setAttribute('y2', chartH);
+  ax.setAttribute('stroke', '#2a2a2a'); ax.setAttribute('stroke-width', '1');
+  g.appendChild(ax);
+
+  // Y axis label
+  const yLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+  yLabel.setAttribute('x', -chartH / 2); yLabel.setAttribute('y', -22);
+  yLabel.setAttribute('transform', 'rotate(-90)');
+  yLabel.setAttribute('text-anchor', 'middle');
+  yLabel.setAttribute('font-family', 'Space Mono, monospace');
+  yLabel.setAttribute('font-size', '8');
+  yLabel.setAttribute('fill', '#444');
+  yLabel.textContent = '€m rev';
+  g.appendChild(yLabel);
+
+  revs.forEach((v, i) => {
+    const x = i * colW + barGap;
+    const rH = Math.max(chartH - yS(v), 2);
+    const rY = yS(v);
+
+    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    rect.setAttribute('x', x); rect.setAttribute('y', rY);
+    rect.setAttribute('width', barW); rect.setAttribute('height', rH);
+    rect.setAttribute('fill', i === 3 ? '#f5a142' : 'rgba(245,161,66,0.45)');
+    rect.setAttribute('rx', '2');
+    g.appendChild(rect);
+
+    // FY28 highlight ring
+    if (i === 3) {
+      const ring = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      ring.setAttribute('x', x - 1); ring.setAttribute('y', rY - 1);
+      ring.setAttribute('width', barW + 2); ring.setAttribute('height', rH + 2);
+      ring.setAttribute('fill', 'none');
+      ring.setAttribute('stroke', 'var(--orange)');
+      ring.setAttribute('stroke-width', '1.5');
+      ring.setAttribute('rx', '2');
+      g.appendChild(ring);
+    }
+
+    if (v >= 0.05) {
+      const vt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      vt.setAttribute('x', x + barW / 2); vt.setAttribute('y', rY - 4);
+      vt.setAttribute('text-anchor', 'middle');
+      vt.setAttribute('font-family', 'Space Mono, monospace');
+      vt.setAttribute('font-size', isMobile ? '8' : '9');
+      vt.setAttribute('fill', i === 3 ? 'var(--orange)' : '#888');
+      vt.textContent = v < 0.1 ? '€' + (v * 1000).toFixed(0) + 'k' : fmt(Math.round(v * 10) / 10);
+      g.appendChild(vt);
+    }
+
+    const ct = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    ct.setAttribute('x', x + barW / 2); ct.setAttribute('y', chartH + 16);
+    ct.setAttribute('text-anchor', 'middle');
+    ct.setAttribute('font-family', 'Space Mono, monospace');
+    ct.setAttribute('font-size', isMobile ? '8' : '9');
+    ct.setAttribute('fill', i === 3 ? 'var(--orange)' : '#555');
+    ct.textContent = years[i];
+    g.appendChild(ct);
+  });
+
+  // FY28 earn-out label
+  const earnLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+  earnLabel.setAttribute('x', 3 * colW + barGap + barW / 2);
+  earnLabel.setAttribute('y', chartH + 26);
+  earnLabel.setAttribute('text-anchor', 'middle');
+  earnLabel.setAttribute('font-family', 'Space Mono, monospace');
+  earnLabel.setAttribute('font-size', '7');
+  earnLabel.setAttribute('fill', '#f5a142');
+  earnLabel.textContent = 'earn-out year';
+  g.appendChild(earnLabel);
 }
 
 // ── DRIVER CARDS ──────────────────────────────
@@ -849,7 +1249,8 @@ function switchTab(name, btn) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById('panel-' + name).classList.add('active');
   btn.classList.add('active');
-  if (name === 'value') { setTimeout(buildWaterfall, 50); }
+  if (name === 'value') setTimeout(buildWaterfall, 50);
+  if (name === 'expertise') setTimeout(() => { updateExpertise(); }, 50);
 }
 
 // ── RESIZE ────────────────────────────────────
@@ -857,7 +1258,10 @@ let resizeTimer;
 window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => {
-    if (document.getElementById('panel-value').classList.contains('active')) buildWaterfall();
+    const vPanel = document.getElementById('panel-value');
+    const ePanel = document.getElementById('panel-expertise');
+    if (vPanel.classList.contains('active')) buildWaterfall();
+    if (ePanel.classList.contains('active')) updateExpertise();
   }, 150);
 });
 
@@ -865,6 +1269,7 @@ window.addEventListener('resize', () => {
 buildScenarios();
 buildWaterfall();
 updateCalc(63);
+updateExpertise();
 </script>
 </body>
 </html>
